@@ -30,7 +30,7 @@ export default function Home() {
         signPosition: 'beforePrefix'
     });
 
-    useEffect(async () => {
+    /* useEffect(async () => {
         const getStoreActivePassword = await AsyncStorage.getItem('@activePassword')
         if (getStoreActivePassword) {
             setModal(true)
@@ -44,27 +44,27 @@ export default function Home() {
         else{
             setWrongPassword(true)
         }
-    }
+    } */
 
     return (
         <View style={styles.container}>
             <View>
                 <View>
-                    <Text style={styles.titleLucro}>Total de Lucro: </Text>
+                    <Text style={styles.titleLucro}>TOTAL A RECEBER: </Text>
                     <Text style={styles.valueLucro}>{valueLucro}</Text>
                 </View>
                 <View>
-                    <Text style={styles.titleDespesa}>Total de Despesa: </Text>
+                    <Text style={styles.titleDespesa}>TOTAL À PAGAR: </Text>
                     <Text style={styles.valueDespesa}>{valueDespesa}</Text>
                 </View>
                 <View>
                     <View style={{ backgroundColor: '#6FB6EA', marginLeft: 8, marginRight: 8, marginTop: 25, padding: 15, borderTopLeftRadius: 15, borderTopRightRadius: 15 }}>
-                        <Text style={styles.titleMoney}>Dinheiro Líquido:</Text>
-                        <Text style={styles.subTitleMoney}>(Dinheiro Líquido é calculado apartir da subtração do valor da despesa sobre o valor do lucro!)</Text>
+                        <Text style={styles.titleMoney}>DINHEIRO LÍQUIDO:</Text>
+                        <Text style={styles.subTitleMoney}>(DINHEIRO LÍQUIDO é calculado apartir da subtração do valor da despesa sobre o valor do lucro!)</Text>
                     </View>
                     {money < 0 ? <Text style={styles.valueMoneyNega}>{valueMoney}</Text> : <Text style={styles.valueMoneyPosi}>+{valueMoney}</Text>}
                 </View>
-                <Modal visible={modal}>
+                {/* <Modal visible={modal}>
                     <View style={{ flex: 1, backgroundColor: '#34495E', justifyContent: 'center' }}>
                         <Text style={styles.titleScreenBlock}>Tela de Bloqueio</Text>
                         <View>
@@ -76,7 +76,7 @@ export default function Home() {
                             </TouchableOpacity>
                         </View>
                     </View>
-                </Modal>
+                </Modal> */}
             </View>
         </View>
     )

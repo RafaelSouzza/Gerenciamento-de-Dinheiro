@@ -35,8 +35,10 @@ export default function ContextProvider({ children }) {
         setMoney(subtracao)
     },[lucro, despesa, passwordScreen, activePassword])
 
+    const values ={ money, setMoney, lucro, setLucro, despesa, setDespesa,passwordScreen, setPasswordScreen, activePassword, setActivePassword } 
+
     return (
-        <ContextMoney.Provider value={{ money, setMoney, lucro, setLucro, despesa, setDespesa,passwordScreen, setPasswordScreen, activePassword, setActivePassword }}>
+        <ContextMoney.Provider value={values}>
             {children}
         </ContextMoney.Provider>
     )
@@ -44,6 +46,6 @@ export default function ContextProvider({ children }) {
 
 export function useMoney() {
     const context = useContext(ContextMoney)
-    const { money, setMoney, lucro, setLucro, despesa, setDespesa,passwordScreen, setPasswordScreen, activePassword, setActivePassword } = context;
-    return { money, setMoney, lucro, setLucro, despesa, setDespesa,passwordScreen, setPasswordScreen, activePassword, setActivePassword };
+    const values = context;
+    return values;
 }

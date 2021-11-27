@@ -136,10 +136,10 @@ export default function Despesas() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.titleList}>Lista de Despesas:</Text>
+            <Text style={styles.titleList}>VALORES DE DÍVIDAS:</Text>
             <FlatList renderItem={({ item }) => <List data={item} />} data={listDespesa} keyExtractor={(item) => String(item.key)} />
             <Modal visible={modalDespesa}>
-                <View style={{ backgroundColor: '#FF8282', flex: 1 }}>
+                <View style={{ backgroundColor: '#FFD9D9', flex: 1 }}>
                     <Text style={styles.titleModal}>ADICIONAR NOVO ITEM:</Text>
                     <TouchableOpacity style={styles.buttonBack} onPress={backPage}>
                         <Icon name="arrow-left-bold" size={50} color="#000" />
@@ -154,7 +154,7 @@ export default function Despesas() {
                 </View>
             </Modal>
             <Modal visible={editDespesa}>
-                <View style={{ backgroundColor: '#FF8282', flex: 1 }}>
+                <View style={{ backgroundColor: '#FFD9D9', flex: 1 }}>
                     <Text style={styles.titleModal}>EDITAR ITEM:</Text>
                     <TouchableOpacity style={styles.buttonBack} onPress={backPage}>
                         <Icon name="arrow-left-bold" size={50} color="#000" />
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     inputDespesa: {
         marginLeft: 30,
         padding: 10,
-        backgroundColor: '#FFB2B2',
+        backgroundColor: '#FF9090',
         width: 350,
         borderRadius: 10,
         borderWidth: 1.5,
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
     inputDescricao: {
         marginLeft: 30,
         padding: 10,
-        backgroundColor: '#FFB2B2',
+        backgroundColor: '#FF9090',
         width: 350,
         height: 150,
         borderRadius: 10,

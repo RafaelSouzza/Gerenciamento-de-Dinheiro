@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Alert, FlatList, TextInput, TouchableOpacity, Modal } from 'react-native';
+import { View, Text, StyleSheet, Alert, FlatList, VirtualizedList, TextInput, TouchableOpacity, Modal } from 'react-native';
 import { formatNumber } from 'react-native-currency-input';
 import CurrencyInput from 'react-native-currency-input';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -18,12 +18,14 @@ export default function Lucros() {
     const { setLucro } = useMoney()
 
     const [lucroMoney, setLucroMoney] = useState('')
+    const [listName, setListName] = useState('')
     const [descricaoLucro, setDescricaoLucro] = useState('')
-    const [key, setKey] = useState(0)
+    const [keyList, setKeyList] = useState(1)
+    const [key, setKey] = useState(1)
     const [active, setActive] = useState(0)
     const [editLucro, setEditLucro] = useState(false)
 
-    useEffect(async () => {
+    /* useEffect(async () => {
         const getListLucro = await AsyncStorage.getItem('@lucros')
         const getKey = await AsyncStorage.getItem('@keys')
         if (getListLucro && getKey) {
@@ -38,20 +40,24 @@ export default function Lucros() {
             await AsyncStorage.setItem('@keys', JSON.stringify(key))
         }
         store()
-    }, [listLucro, key])
+    }, [listLucro]) */
 
     function addLucro() {
         if (lucroMoney == '') {
             Alert.alert('Aviso', 'Algum campo está vazio, preencha para adicionar!')
         }
         else {
-            setKey(key + 1)
-            let item = {
+            let itemList = {
+                nameList: listName,
                 key: key,
-                value: lucroMoney,
-                description: descricaoLucro
+                info: {
+                    value: lucroMoney,
+                    description: descricaoLucro
+                }
             }
-            setListLucro([...listLucro, item])
+            setListLucro([...listLucro, itemList])
+            setKey(key + 1)
+            setKeyList(keyList + 1)
             setActive(true)
         }
     }
@@ -68,10 +74,10 @@ export default function Lucros() {
 
     useEffect(() => {
         if (active) {
+            setListName('')
             setLucroMoney('')
             setDescricaoLucro('')
             setModalLucro(false)
-
             let soma = listLucro.map((result) => result.value)
             if (soma.length > 0) {
                 let somaFinal = soma.reduce((value1, value2) => value1 + value2)
@@ -93,7 +99,7 @@ export default function Lucros() {
     }
 
     const List = ({ data }) => {
-        const formattedValue = formatNumber(data.value, {
+        const formattedValue = formatNumber(data.info.value, {
             separator: ',',
             prefix: 'R$ ',
             precision: 2,
@@ -110,6 +116,7 @@ export default function Lucros() {
             }])
         }
         function editItem(data) {
+            setListName(data.nameList)
             setLucroMoney(data.value)
             setDescricaoLucro(data.description)
             setEditLucro(true)
@@ -121,8 +128,9 @@ export default function Lucros() {
         return (
             <View style={{ flex: 1, backgroundColor: '#CEFF9F', width: 350, alignSelf: 'center', padding: 20, borderWidth: 2, borderColor: '#B3FF6B', marginTop: 10, flexDirection: 'row', borderRadius: 10 }}>
                 <View>
+                    <Text style={styles.nameList}>Lista: {data.nameList}</Text>
                     <Text style={styles.valueList}>+{formattedValue}</Text>
-                    <Text style={styles.descricaoList}>Descrição: {data.description}</Text>
+                    <Text style={styles.descricaoList}>Descrição: {data.info.description}</Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                     <TouchableOpacity style={{ padding: 3, justifyContent: 'center' }} onPress={() => editItem(data)}>
@@ -138,23 +146,25 @@ export default function Lucros() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.titleList}>Lista de Lucros:</Text>
-            <FlatList renderItem={({ item }) => <List data={item} />} data={listLucro} keyExtractor={(item) => String(item.key)} />
+            <Text style={styles.titleList}>VALORES RECEBER OU POSSUÍDO:</Text>
+            <FlatList renderItem={({ item }) => <List data={item} />} data={listLucro} keyExtractor={(item) => String(item)} />
 
             <Modal visible={modalLucro}>
-                    <View style={{ backgroundColor: '#B8FF89', flex: 1 }}>
-                        <Text style={styles.titleModal}>ADICIONAR NOVO ITEM:</Text>
-                        <TouchableOpacity style={styles.buttonBack} onPress={backPage}>
-                            <Icon name="arrow-left-bold" size={50} color="#000" />
-                        </TouchableOpacity>
-                        <Text style={styles.labelLucro}>Valor: </Text>
-                        <CurrencyInput prefix="$" delimiter="." separator="," precision={2} style={styles.inputLucro} placeholder="R$" placeholderTextColor="#000" onChangeValue={text => setLucroMoney(text)} value={lucroMoney} />
-                        <Text style={styles.labelDescricao}>Descrição: </Text>
-                        <TextInput style={styles.inputDescricao} multiline={true} placeholder='Descrição...' placeholderTextColor="#000" onChangeText={text => setDescricaoLucro(text)} value={descricaoLucro} />
-                        <TouchableOpacity style={styles.buttonAddLucro} onPress={addLucro}>
-                            <Text style={styles.textAddLucro}>ADICIONAR</Text>
-                        </TouchableOpacity>
-                    </View>
+                <View style={{ backgroundColor: '#F3FFDE', flex: 1 }}>
+                    <Text style={styles.titleModal}>ADICIONAR NOVO ITEM:</Text>
+                    <TouchableOpacity style={styles.buttonBack} onPress={backPage}>
+                        <Icon name="arrow-left-bold" size={50} color="#000" />
+                    </TouchableOpacity>
+                    <Text style={styles.labelNameList}>Nome da Lista: </Text>
+                    <TextInput style={styles.inputListName} placeholderTextColor="#000" onChangeText={text => setListName(text)} value={listName} />
+                    <Text style={styles.labelLucro}>Valor: </Text>
+                    <CurrencyInput prefix="$" delimiter="." separator="," precision={2} style={styles.inputLucro} placeholder="R$" placeholderTextColor="#000" onChangeValue={text => setLucroMoney(text)} value={lucroMoney} />
+                    <Text style={styles.labelDescricao}>Descrição: </Text>
+                    <TextInput style={styles.inputDescricao} multiline={true} placeholder='Descrição...' placeholderTextColor="#000" onChangeText={text => setDescricaoLucro(text)} value={descricaoLucro} />
+                    <TouchableOpacity style={styles.buttonAddLucro} onPress={addLucro}>
+                        <Text style={styles.textAddLucro}>ADICIONAR</Text>
+                    </TouchableOpacity>
+                </View>
             </Modal>
 
             <Modal visible={editLucro}>
@@ -163,6 +173,8 @@ export default function Lucros() {
                     <TouchableOpacity style={styles.buttonBack} onPress={backPage}>
                         <Icon name="arrow-left-bold" size={50} color="#000" />
                     </TouchableOpacity>
+                    <Text style={styles.labelNameList}>Nome da Lista: </Text>
+                    <TextInput style={styles.inputListName} placeholderTextColor="#000" onChangeText={text => setListName(text)} value={listName} />
                     <Text style={styles.labelLucro}>Valor: </Text>
                     <CurrencyInput prefix="$" delimiter="." separator="," precision={2} style={styles.inputLucro} placeholder="R$" placeholderTextColor="#000" onChangeValue={text => setLucroMoney(text)} value={lucroMoney} />
                     <Text style={styles.labelDescricao}>Descrição: </Text>
@@ -218,17 +230,35 @@ const styles = StyleSheet.create({
         padding: 15,
         color: '#000'
     },
+    labelNameList: {
+        fontSize: 20,
+        marginBottom: 5,
+        fontWeight: '700',
+        marginLeft: 30,
+        marginTop: 15
+    },
+    inputListName: {
+        marginLeft: 30,
+        padding: 10,
+        backgroundColor: '#DAF7A6',
+        width: 350,
+        borderRadius: 10,
+        borderWidth: 1.5,
+        borderColor: '#BFFF95',
+        fontSize: 17,
+        color: '#000'
+    },
     labelLucro: {
         fontSize: 20,
         marginBottom: 5,
         fontWeight: '700',
         marginLeft: 30,
-        marginTop: 40
+        marginTop: 15
     },
     inputLucro: {
         marginLeft: 30,
         padding: 10,
-        backgroundColor: '#E5FFD3',
+        backgroundColor: '#DAF7A6',
         width: 350,
         borderRadius: 10,
         borderWidth: 1.5,
@@ -246,7 +276,7 @@ const styles = StyleSheet.create({
     inputDescricao: {
         marginLeft: 30,
         padding: 10,
-        backgroundColor: '#E5FFD3',
+        backgroundColor: '#DAF7A6',
         width: 350,
         height: 150,
         borderRadius: 10,
@@ -271,17 +301,25 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#000'
     },
-    valueList: {
-        fontSize: 20,
+    nameList: {
+        fontSize: 19,
         fontWeight: 'bold',
         color: '#45990E',
         padding: 0,
-        margin: -5
+        marginLeft: -5
+    },
+    valueList: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#45990E',
+        padding: 0,
+        marginLeft: -5
     },
     descricaoList: {
         fontSize: 17,
         fontWeight: '700',
         color: '#61A932',
-        width: 250
+        width: 250,
+        marginLeft: -5
     }
 })
