@@ -1,8 +1,27 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\rafae\\Desktop\\Gerenciamento-de-Dinheiro\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+            "outputFile": "C:\\Users\\rafae\\Desktop\\Projetos\\Gerenciamento-de-Dinheiro\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
             "map": [
+                {
+                    "source": "C:\\Users\\rafae\\Desktop\\Projetos\\Gerenciamento-de-Dinheiro\\android\\app\\src\\main\\res\\values\\styles.xml",
+                    "from": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "54",
+                        "endLines": "6",
+                        "endColumns": "12",
+                        "endOffsets": "234"
+                    },
+                    "to": {
+                        "startLines": "801",
+                        "startColumns": "4",
+                        "startOffsets": "58480",
+                        "endLines": "804",
+                        "endColumns": "12",
+                        "endOffsets": "58660"
+                    }
+                },
                 {
                     "source": "C:\\Users\\rafae\\.gradle\\caches\\transforms-2\\files-2.1\\5e5754defa7ec1b661ffd11a17838c67\\fragment-1.2.1\\res\\values\\values.xml",
                     "from": {
@@ -39,6 +58,23 @@
                         "endLines": "4506,4513,4524,6771,6776",
                         "endColumns": "24,24,24,24,24",
                         "endOffsets": "301864,302249,302846,421339,421609"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\rafae\\Desktop\\Projetos\\Gerenciamento-de-Dinheiro\\android\\app\\build\\generated\\res\\resValues\\debug\\values\\gradleResValues.xml",
+                    "from": {
+                        "startLines": "6,8",
+                        "startColumns": "4,4",
+                        "startOffsets": "161,269",
+                        "endColumns": "63,68",
+                        "endOffsets": "220,333"
+                    },
+                    "to": {
+                        "startLines": "635,636",
+                        "startColumns": "4,4",
+                        "startOffsets": "40488,40552",
+                        "endColumns": "63,68",
+                        "endOffsets": "40547,40616"
                     }
                 },
                 {
@@ -97,42 +133,6 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\rafae\\Desktop\\Gerenciamento-de-Dinheiro\\android\\app\\src\\main\\res\\values\\styles.xml",
-                    "from": {
-                        "startLines": "3",
-                        "startColumns": "4",
-                        "startOffsets": "54",
-                        "endLines": "6",
-                        "endColumns": "12",
-                        "endOffsets": "234"
-                    },
-                    "to": {
-                        "startLines": "801",
-                        "startColumns": "4",
-                        "startOffsets": "58480",
-                        "endLines": "804",
-                        "endColumns": "12",
-                        "endOffsets": "58660"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\rafae\\Desktop\\Gerenciamento-de-Dinheiro\\android\\app\\build\\generated\\res\\resValues\\debug\\values\\gradleResValues.xml",
-                    "from": {
-                        "startLines": "6,8",
-                        "startColumns": "4,4",
-                        "startOffsets": "161,269",
-                        "endColumns": "63,68",
-                        "endOffsets": "220,333"
-                    },
-                    "to": {
-                        "startLines": "635,636",
-                        "startColumns": "4,4",
-                        "startOffsets": "40488,40552",
-                        "endColumns": "63,68",
-                        "endOffsets": "40547,40616"
-                    }
-                },
-                {
                     "source": "C:\\Users\\rafae\\.gradle\\caches\\transforms-2\\files-2.1\\d67cd79abd1ca209502f51c69d23182b\\core-1.1.0\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2,3,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,83,84,88,89,90,91,98,141,173,210",
@@ -149,23 +149,6 @@
                         "endLines": "178,179,283,284,285,286,287,288,289,502,503,504,505,506,507,508,509,510,511,512,513,514,515,516,526,527,528,530,531,532,533,534,535,536,537,538,539,540,541,542,543,544,545,546,547,548,549,550,551,552,553,554,555,556,557,558,559,560,561,578,579,592,593,594,595,596,597,598,599,600,601,605,638,775,3097,3101,3102,3106,3107,3670,3671,5559,5819,5851,6041,6048",
                         "endColumns": "68,62,69,67,71,69,60,73,72,60,60,61,63,61,60,67,99,59,65,72,68,56,51,61,71,75,64,58,58,59,59,59,59,59,59,59,59,59,59,58,59,59,59,59,59,59,59,59,59,59,58,59,59,58,58,58,58,58,58,34,34,54,62,54,57,56,49,60,56,33,34,34,69,70,116,12,109,12,128,71,66,24,24,24,24,24",
                         "endOffsets": "11298,11361,18431,18499,18571,18641,18702,18776,18849,32991,33052,33114,33178,33240,33301,33369,33469,33529,33595,33668,33737,33794,33846,33908,34498,34574,34639,34749,34808,34868,34928,34988,35048,35108,35168,35228,35288,35348,35408,35467,35527,35587,35647,35707,35767,35827,35887,35947,36007,36067,36126,36186,36246,36305,36364,36423,36482,36541,36600,37453,37488,38137,38200,38255,38313,38370,38420,38481,38538,38572,38607,38785,40743,56669,210748,210949,211059,211260,211389,251004,251071,359025,373977,376042,384366,384743"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\rafae\\Desktop\\Gerenciamento-de-Dinheiro\\android\\app\\src\\main\\res\\values\\strings.xml",
-                    "from": {
-                        "startLines": "1",
-                        "startColumns": "4",
-                        "startOffsets": "16",
-                        "endColumns": "49",
-                        "endOffsets": "61"
-                    },
-                    "to": {
-                        "startLines": "671",
-                        "startColumns": "4",
-                        "startOffsets": "43007",
-                        "endColumns": "49",
-                        "endOffsets": "43052"
                     }
                 },
                 {
@@ -240,6 +223,23 @@
                         "startOffsets": "37053,37122",
                         "endColumns": "68,56",
                         "endOffsets": "37117,37174"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\rafae\\Desktop\\Projetos\\Gerenciamento-de-Dinheiro\\android\\app\\src\\main\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "1",
+                        "startColumns": "4",
+                        "startOffsets": "16",
+                        "endColumns": "49",
+                        "endOffsets": "61"
+                    },
+                    "to": {
+                        "startLines": "671",
+                        "startColumns": "4",
+                        "startOffsets": "43007",
+                        "endColumns": "49",
+                        "endOffsets": "43052"
                     }
                 },
                 {

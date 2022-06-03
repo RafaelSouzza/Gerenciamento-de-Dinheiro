@@ -1,42 +1,47 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View } from 'react-native';
 
 const ContextMoney = createContext();
 export default function ContextProvider({ children }) {
-    const [money, setMoney] = useState(0)
+    const [money, setMoney] = useState('')
     const [lucro, setLucro] = useState(0)
     const [despesa, setDespesa] = useState(0)
     const [passwordScreen, setPasswordScreen] = useState('')
     const [activePassword, setActivePassword] = useState(false)
+    const [cash, setCash] = useState('')
 
-    useEffect(async()=>{
+    useEffect(async () => {
         const getStoreHomeLucro = await AsyncStorage.getItem('@valueLucro')
         const getStoreHomeDespesa = await AsyncStorage.getItem('@valueDespesa')
+        const getStoreCash = await AsyncStorage.getItem('@valueCash')
         const getStorePassword = await AsyncStorage.getItem('@password')
         const getStoreActivePassword = await AsyncStorage.getItem('@activePassword')
-        if(getStoreHomeLucro||getStoreHomeDespesa || getStorePassword || getStoreActivePassword){
+        if (getStoreHomeLucro || getStoreHomeDespesa || getStorePassword || getStoreActivePassword) {
             setLucro(JSON.parse(getStoreHomeLucro))
             setDespesa(JSON.parse(getStoreHomeDespesa))
+            setCash(JSON.parse(getStoreCash))
             setActivePassword(getStoreActivePassword)
             setPasswordScreen(JSON.parse(getStorePassword))
         }
-    },[])
+    }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         async function saveLucroDespesa() {
-            await AsyncStorage.setItem('@valueLucro',JSON.stringify(lucro))
-            await AsyncStorage.setItem('@valueDespesa',JSON.stringify(despesa))
-            await AsyncStorage.setItem('@password',JSON.stringify(passwordScreen))
-            await AsyncStorage.setItem('@activePassword',JSON.stringify(activePassword))
+            await AsyncStorage.setItem('@valueLucro', JSON.stringify(lucro))
+            await AsyncStorage.setItem('@valueDespesa', JSON.stringify(despesa))
+            await AsyncStorage.setItem('@valueCash', JSON.stringify(cash))
+            await AsyncStorage.setItem('@password', JSON.stringify(passwordScreen))
+            await AsyncStorage.setItem('@activePassword', JSON.stringify(activePassword))
         }
         saveLucroDespesa()
-        let subtracao = lucro - despesa
+        let subtracao = (lucro + cash) - despesa
         setMoney(subtracao)
-    },[lucro, despesa, passwordScreen, activePassword])
+    }, [lucro, despesa, passwordScreen, activePassword, cash])
+
+    const values = { cash, setCash, money, setMoney, lucro, setLucro, despesa, setDespesa, passwordScreen, setPasswordScreen, activePassword, setActivePassword }
 
     return (
-        <ContextMoney.Provider value={{ money, setMoney, lucro, setLucro, despesa, setDespesa,passwordScreen, setPasswordScreen, activePassword, setActivePassword }}>
+        <ContextMoney.Provider value={values}>
             {children}
         </ContextMoney.Provider>
     )
@@ -44,6 +49,6 @@ export default function ContextProvider({ children }) {
 
 export function useMoney() {
     const context = useContext(ContextMoney)
-    const { money, setMoney, lucro, setLucro, despesa, setDespesa,passwordScreen, setPasswordScreen, activePassword, setActivePassword } = context;
-    return { money, setMoney, lucro, setLucro, despesa, setDespesa,passwordScreen, setPasswordScreen, activePassword, setActivePassword };
+    const values = context;
+    return values;
 }

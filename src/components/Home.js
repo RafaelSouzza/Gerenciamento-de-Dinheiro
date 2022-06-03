@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Modal, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { View, Text, StyleSheet, Keyboard, Modal, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { formatNumber } from 'react-native-currency-input';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CurrencyInput from 'react-native-currency-input';
 
 import { useMoney } from '../context/Money';
 
 export default function Home() {
-    const { money, lucro, despesa, activePassword, setActivePassword, passwordScreen } = useMoney()
+    const { money, lucro, despesa, activePassword, setActivePassword, passwordScreen, cash, setCash } = useMoney()
     const [modal, setModal] = useState(false)
     const [blockPassword, setBlockPassword] = useState('')
     const [wrongPassword, setWrongPassword] = useState(false)
+    
     const valueLucro = formatNumber(lucro, {
         separator: ',',
         prefix: 'R$ ',
@@ -41,7 +43,7 @@ export default function Home() {
             setModal(false)
             setWrongPassword(false)
         }
-        else{
+        else {
             setWrongPassword(true)
         }
     }
@@ -50,11 +52,15 @@ export default function Home() {
         <View style={styles.container}>
             <View>
                 <View>
-                    <Text style={styles.titleLucro}>TOTAL A RECEBER: </Text>
-                    <Text style={styles.valueLucro}>{valueLucro}</Text>
+                    <Text style={[styles.titleMain, { backgroundColor: '#F5B041' }]}>SALDO: </Text>
+                    <CurrencyInput onSubmitEditing={Keyboard.dismiss} style={[styles.inputCash,{backgroundColor:'#FDEBD0'}]} prefix="R$ " delimiter="." separator="," precision={2} placeholder="R$" placeholderTextColor="#000" onChangeValue={text => setCash(text)} value={cash} />
                 </View>
                 <View>
-                    <Text style={styles.titleDespesa}>TOTAL À PAGAR: </Text>
+                    <Text style={[styles.titleMain, { backgroundColor: '#5CFF00' }]}>TOTAL A RECEBER: </Text>
+                    <Text style={styles.valueLucro}>{valueLucro}</Text>
+                </View>
+                <View>  
+                    <Text style={[styles.titleMain, { backgroundColor: '#FF6161' }]}>TOTAL À PAGAR: </Text>
                     <Text style={styles.valueDespesa}>{valueDespesa}</Text>
                 </View>
                 <View>
@@ -62,9 +68,9 @@ export default function Home() {
                         <Text style={styles.titleMoney}>DINHEIRO LÍQUIDO:</Text>
                         <Text style={styles.subTitleMoney}>(DINHEIRO LÍQUIDO é calculado apartir da subtração do valor da despesa sobre o valor do lucro!)</Text>
                     </View>
-                    {money < 0 ? <Text style={styles.valueMoneyNega}>{valueMoney}</Text> : <Text style={styles.valueMoneyPosi}>+{valueMoney}</Text>}
+                    {money < 0 ? <Text style={styles.valueMoneyNega}>{valueMoney}</Text> : <Text style={styles.valueMoneyPosi}>{valueMoney}</Text>}
                 </View>
-                <Modal visible={modal}>
+                {/* <Modal visible={modal}>
                     <View style={{ flex: 1, backgroundColor: '#34495E', justifyContent: 'center' }}>
                         <Text style={styles.titleScreenBlock}>Tela de Bloqueio</Text>
                         <View>
@@ -76,7 +82,7 @@ export default function Home() {
                             </TouchableOpacity>
                         </View>
                     </View>
-                </Modal>
+                </Modal> */}
             </View>
         </View>
     )
@@ -107,7 +113,7 @@ const styles = StyleSheet.create({
         marginRight: 8,
         borderBottomLeftRadius: 15,
         borderBottomRightRadius: 15,
-        color: '#38D226'
+        color: '#27AE60'
 
     },
     valueMoneyNega: {
@@ -121,17 +127,16 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 15,
         color: '#FF2F2F'
     },
-    titleLucro: {
+    titleMain: {
         fontSize: 20,
         fontWeight: 'bold',
-        backgroundColor: '#5CFF00',
         padding: 15,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
         textAlign: 'center',
         marginLeft: 8,
         marginRight: 8,
-        marginTop: 25
+        marginTop: 25,
     },
     valueLucro: {
         textAlign: 'center',
@@ -142,6 +147,17 @@ const styles = StyleSheet.create({
         marginRight: 8,
         borderBottomLeftRadius: 15,
         borderBottomRightRadius: 15
+    },
+    inputCash:{
+        textAlign: 'center',
+        fontSize: 20,
+        padding: 20,
+        backgroundColor: '#D1FFB7',
+        marginLeft: 8,
+        marginRight: 8,
+        borderBottomLeftRadius: 15,
+        borderBottomRightRadius: 15,
+        color:'#000'
     },
     titleDespesa: {
         fontSize: 20,
@@ -226,13 +242,12 @@ const styles = StyleSheet.create({
     textButtonSubmitPassword: {
         fontSize: 18,
         color: '#FFF',
-
     },
-    wrongPassword:{
-        fontSize:14,
-        fontStyle:'italic',
-        padding:3,
-        marginLeft:6,
-        color:'#FF0000'
+    wrongPassword: {
+        fontSize: 14,
+        fontStyle: 'italic',
+        padding: 3,
+        marginLeft: 6,
+        color: '#FF0000'
     }
 })
